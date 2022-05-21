@@ -1,5 +1,6 @@
 import { Application, Text, Loader } from "pixi.js";
-import { createNewCard } from "./card";
+import { Card } from "./card";
+import { GameBoard } from "./gameBoard";
 
 const app = new Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -10,8 +11,9 @@ const app = new Application({
   height: innerHeight,
 });
 
-const helloText: Text = new Text("Hello world!");
-helloText.anchor.set(0.5);
+const gameBoard: GameBoard =  new  GameBoard(app.screen.width / 2, app.screen.height / 2, 600);
+const card:Card = new Card(-240, -215, "Card №2", 0);
 
-const card = createNewCard();
-app.stage.addChild(card);
+gameBoard.addCard(card);
+
+app.stage.addChild(gameBoard);

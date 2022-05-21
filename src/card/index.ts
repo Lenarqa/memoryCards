@@ -1,46 +1,49 @@
 import { Sprite, Container, Texture, Text } from "pixi.js";
 
-export const createNewCard = (): Container => {
-  const card: Container = new Container();
+export class Card extends Container {
+  id: number;
+  constructor(x: number, y: number, text: string, id: number) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.width = 100;
+    this.height = 150;
+    this.interactive = true;
+    this.buttonMode = true;
+    this.id = id;
 
-  card.width = 100;
-  card.height = 150;
-  card.position.x = 100;
-  card.position.y = 100;
-  card.pivot.x = card.height / 2;
-  card.pivot.y = card.width / 2;
-  card.interactive = true;
-  card.buttonMode = true;
+    this.on("pointerdown", () => {
+      console.log("Hello");
+    });
 
-  card.on('pointerdown', ()=>{
-    console.log("Hello");
-  });
+    this.on("pointerover", () => {
+      console.log("pointerover");
+      cardBg.tint = 0x6495ed;
+    });
 
-  card.on("pointerover", ()=>{
-    console.log("pointerover")
-    cardBg.tint = 0xffffff;
-  })
+    this.on("pointerout", () => {
+      console.log("pointerout");
+      cardBg.tint = 0xff0000;
+    });
 
-  card.on("pointerout", ()=>{
-    console.log("pointerout")
+    const cardBg: Sprite = new Sprite(Texture.WHITE);
+    cardBg.anchor.set(0.5);
+    cardBg.width = 100;
+    cardBg.height = 150;
     cardBg.tint = 0xff0000;
-  })
 
+    const cardText: Text = new Text(text, {
+      fontSize: 30,
+      wordWrap: true,
+      align: "center",
+    });
 
-  const cardBg: Sprite = new Sprite(Texture.WHITE);
-  cardBg.anchor.set(0.5);
-  cardBg.width = 100;
-  cardBg.height = 150;
-  cardBg.tint = 0xff0000;
- 
+    cardText.anchor.set(0.5);
+    cardText.position.x = this.height / 2;
+    cardText.position.y = this.width / 2;
+    cardText.zIndex = 10;
+    cardText;
 
-  const cardText: Text = new Text("Hello №1", {fontSize: 30, wordWrap: true, align: "center"});
-  cardText.anchor.set(0.5);
-  cardText.position.x = card.height / 2;
-  cardText.position.y = card.width / 2;
-  cardText.zIndex = 10;
-  cardText
-
-  card.addChild(cardBg, cardText);
-  return card;
-};
+    this.addChild(cardBg, cardText);
+  }
+}
