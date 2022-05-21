@@ -1,8 +1,15 @@
-import { Sprite, Container, Texture, Text } from "pixi.js";
+import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
   id: number;
-  constructor(x: number, y: number, text: string, id: number) {
+  constructor(
+    x: number,
+    y: number,
+    text: string,
+    id: number,
+    img: number,
+    description: string
+  ) {
     super();
     this.x = x;
     this.y = y;
@@ -18,32 +25,48 @@ export class Card extends Container {
 
     this.on("pointerover", () => {
       console.log("pointerover");
-      cardBg.tint = 0x6495ed;
+      cardBg.tint =  0x6A48D7	;
     });
 
     this.on("pointerout", () => {
       console.log("pointerout");
-      cardBg.tint = 0xff0000;
+      cardBg.tint = 0x3914AF;
     });
 
     const cardBg: Sprite = new Sprite(Texture.WHITE);
     cardBg.anchor.set(0.5);
     cardBg.width = 100;
     cardBg.height = 150;
-    cardBg.tint = 0xff0000;
+    cardBg.tint = 0x3914AF;
 
-    const cardText: Text = new Text(text, {
-      fontSize: 30,
+    let sprite: Sprite = Sprite.from(`${img}.png`);
+    sprite.anchor.set(0.5);
+    sprite.x = this.width / 2;
+    sprite.y = -30;
+    sprite.scale.set(0.7, 0.7);
+
+    const cardName: Text = new Text(text, {
+      fontSize: 20,
       wordWrap: true,
       align: "center",
+      fill: "#FFE773",
     });
 
-    cardText.anchor.set(0.5);
-    cardText.position.x = this.height / 2;
-    cardText.position.y = this.width / 2;
-    cardText.zIndex = 10;
-    cardText;
+    cardName.anchor.set(0.5);
+    cardName.position.x = this.width / 2;
+    cardName.position.y = 15;
 
-    this.addChild(cardBg, cardText);
+    const CardDescription: Text = new Text(description, {
+      fontSize: 20,
+      wordWrap: true,
+      align: "center",
+      fill: "#FFDE40",
+    });
+
+    CardDescription.anchor.set(0.5);
+    CardDescription.position.x = this.width / 2;
+    CardDescription.position.y = 40;
+
+    this.addChild(cardBg, sprite, cardName, CardDescription);
   }
 }
