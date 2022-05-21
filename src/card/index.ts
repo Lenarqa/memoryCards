@@ -1,8 +1,11 @@
+import { ICard } from './../config/index';
 import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
   id: number;
   isHide: boolean;
+  setIsHide: (isHide:boolean) => void;
+
   constructor(
     x: number,
     y: number,
@@ -22,12 +25,15 @@ export class Card extends Container {
     this.name = name;
     this.pivot.x = 75;
     this.pivot.y = 75;
-    // this.isHide = true;
+    this.isHide = false;
+    this.setIsHide = this.setIsHide;
+    this.getIsHide = this.getIsHide;
 
     this.on("pointerdown", () => {
-      console.log("Hello " + this.name);
-      this.isHide = !cardСover.visible;
-      cardСover.visible = this.isHide;
+      console.log("Hello " + this.isHide);
+      cardСover.visible = !cardСover.visible;
+      this.isHide = cardСover.visible;
+      console.log("Hello " + this.isHide);
     });
 
     this.on("pointerover", () => {
@@ -80,15 +86,18 @@ export class Card extends Container {
     cardСover.width = 150;
     cardСover.height = 150;
     cardСover.tint = 0x9f3ed5;
-    // cardСover.alpha = 0.5;
-    cardСover.visible = false;
+    cardСover.visible = this.isHide;
+
+    this.setIsHide = (isHide:boolean):void => {
+      cardСover.visible = isHide;
+      this.isHide = isHide;
+    }
 
     let cardMask = new Graphics();
     cardMask.lineStyle(0);
     cardMask.beginFill(0xaa4f08);
     cardMask.drawCircle(this.width / 2, this.height / 2, 65); //7.1
     cardMask.endFill();
-    // cardСover.addChild(cardMask);
 
     const cardCoverImg = Sprite.from("cardCover.png");
     cardCoverImg.anchor.set(0.5);
@@ -100,5 +109,37 @@ export class Card extends Container {
     this.mask = cardMask;
 
     this.addChild(cardMask, cardBg,  sprite, cardName, CardDescription, cardСover);
+  }  
+
+  public getIsHide = ():boolean => {
+    return this.isHide;
+  }
+
+  public static addCards(cards: ICard[]): Card[] {
+    let x: number = 367; // x position including padding
+    let y: number = 167; // y position including padding
+    let cardsRes:Card[] = []; 
+
+    cards.sort(() => Math.random() - 0.5); //shuffle cards
+
+    for (let i = 0; i < cards.length; i++) {
+      if (i !== 0) {
+        x += 160;
+      }
+      if (x > 935) {
+        x = 367;
+        y += 160;
+      }
+      const card: Card = new Card(
+        x,
+        y,
+        cards[i].name,
+        cards[i].id,
+        cards[i].img,
+        cards[i].description
+      );
+      cardsRes[i] = card;
+    }
+    return cardsRes;
   }
 }

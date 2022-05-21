@@ -1,5 +1,5 @@
-import { Application, Sprite } from "pixi.js";
-import { Card } from "./card";
+import { Card } from './card/index';
+import { Application } from "pixi.js";
 import { GameBoard } from "./gameBoard";
 import { cardInfo } from "./config";
 
@@ -14,7 +14,24 @@ const app = new Application({
 });
 
 const gameBoard: GameBoard =  new  GameBoard(app.screen.width / 2, app.screen.height / 2, 700);
-gameBoard.addCards(cardInfo);
+// gameBoard.addCards(cardInfo);
+// gameBoard.hideCards();
+const cards:Card[] = Card.addCards(cardInfo);
+// cards.map(card => card.setIsHide(true));
 
 
-app.stage.addChild(gameBoard);
+app.stage.addChild(gameBoard, ...cards);
+
+let isGameBegin = false;
+if(isGameBegin === false) {
+  setTimeout(()=>{
+    cards.map(card => card.setIsHide(true));
+    isGameBegin = true;
+  }, 5000)
+}
+
+app.ticker.add((delta) => {
+  
+});
+
+
