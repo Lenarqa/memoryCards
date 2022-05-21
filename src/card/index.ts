@@ -13,11 +13,13 @@ export class Card extends Container {
     super();
     this.x = x;
     this.y = y;
-    this.width = 100;
+    this.width = 150;
     this.height = 150;
     this.interactive = true;
     this.buttonMode = true;
     this.id = id;
+    this.pivot.x = 75;
+    this.pivot.y = 75;
 
     this.on("pointerdown", () => {
       console.log("Hello");
@@ -35,7 +37,7 @@ export class Card extends Container {
 
     const cardBg: Sprite = new Sprite(Texture.WHITE);
     cardBg.anchor.set(0.5);
-    cardBg.width = 100;
+    cardBg.width = 150;
     cardBg.height = 150;
     cardBg.tint = 0x3914AF;
 

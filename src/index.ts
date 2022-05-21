@@ -1,6 +1,7 @@
 import { Application, Sprite } from "pixi.js";
 import { Card } from "./card";
 import { GameBoard } from "./gameBoard";
+import { cardInfo } from "./config";
 
 const app = new Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -11,14 +12,8 @@ const app = new Application({
   height: innerHeight,
 });
 
-const gameBoard: GameBoard =  new  GameBoard(app.screen.width / 2, app.screen.height / 2, 600);
-const card:Card = new Card(-240, -215, "Жук", 0, 1, "Жу-жу-жу");
-const card2:Card = new Card(-130, -215, "Стрекоза", 1, 2, "Бз-бз-бз");
-const card3:Card = new Card(-20, -215, "Пончик", 1, 3, "Сладкий");
-
-gameBoard.addCard(card);
-gameBoard.addCard(card2);
-gameBoard.addCard(card3);
+const gameBoard: GameBoard =  new  GameBoard(app.screen.width / 2, app.screen.height / 2, 700);
+gameBoard.addCards(cardInfo);
 
 
 app.stage.addChild(gameBoard);
