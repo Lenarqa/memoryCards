@@ -2,6 +2,7 @@ import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
   id: number;
+  isHide: boolean;
   constructor(
     x: number,
     y: number,
@@ -21,18 +22,23 @@ export class Card extends Container {
     this.name = name;
     this.pivot.x = 75;
     this.pivot.y = 75;
+    // this.isHide = true;
 
     this.on("pointerdown", () => {
       console.log("Hello " + this.name);
-      cardСover.visible = !cardСover.visible;
+      this.isHide = !cardСover.visible;
+      cardСover.visible = this.isHide;
     });
 
     this.on("pointerover", () => {
       cardBg.tint = 0x6a48d7;
+      cardCoverImg.tint = 0xFFE773;
     });
 
     this.on("pointerout", () => {
+      console.log("pointerout")
       cardBg.tint = 0x3914af;
+      cardCoverImg.tint = 0xFFFFFF;
     });
 
     const cardBg: Sprite = new Sprite(Texture.WHITE);
@@ -74,13 +80,15 @@ export class Card extends Container {
     cardСover.width = 150;
     cardСover.height = 150;
     cardСover.tint = 0x9f3ed5;
+    // cardСover.alpha = 0.5;
+    cardСover.visible = false;
 
     let cardMask = new Graphics();
     cardMask.lineStyle(0);
-    cardMask.beginFill(0xAA4F08);
-    cardMask.drawCircle(this.width / 2, this.height / 2, 7.1); //7.5
+    cardMask.beginFill(0xaa4f08);
+    cardMask.drawCircle(this.width / 2, this.height / 2, 65); //7.1
     cardMask.endFill();
-    cardСover.addChild(cardMask);
+    // cardСover.addChild(cardMask);
 
     const cardCoverImg = Sprite.from("cardCover.png");
     cardCoverImg.anchor.set(0.5);
@@ -91,6 +99,6 @@ export class Card extends Container {
     
     this.mask = cardMask;
 
-    this.addChild(cardBg, sprite, cardName, CardDescription, cardСover);
+    this.addChild(cardMask, cardBg,  sprite, cardName, CardDescription, cardСover);
   }
 }
