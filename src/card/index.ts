@@ -1,10 +1,13 @@
-import { ICard } from './../config/index';
+import { ICard } from "./../config/index";
 import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
   id: number;
   isHide: boolean;
-  setIsHide: (isHide:boolean) => void;
+  isWin: boolean;
+  setIsHide: (isHide: boolean) => void;
+  setIsInteractive: (isInteractive: boolean) => void;
+  setIsWin: () => void;
 
   constructor(
     x: number,
@@ -12,39 +15,36 @@ export class Card extends Container {
     name: string,
     id: number,
     img: number,
-    description: string
+    description: string,
+    loader: Loader
   ) {
     super();
     this.x = x;
     this.y = y;
     this.width = 150;
     this.height = 150;
-    this.interactive = true;
+    this.interactive = false;
     this.buttonMode = true;
     this.id = id;
     this.name = name;
     this.pivot.x = 75;
     this.pivot.y = 75;
     this.isHide = false;
-    this.setIsHide = this.setIsHide;
-    this.getIsHide = this.getIsHide;
+    this.isWin = false;
 
     this.on("pointerdown", () => {
-      console.log("Hello " + this.isHide);
       cardСover.visible = !cardСover.visible;
       this.isHide = cardСover.visible;
-      console.log("Hello " + this.isHide);
     });
 
     this.on("pointerover", () => {
       cardBg.tint = 0x6a48d7;
-      cardCoverImg.tint = 0xFFE773;
+      cardCoverImg.tint = 0xffe773;
     });
 
     this.on("pointerout", () => {
-      console.log("pointerout")
       cardBg.tint = 0x3914af;
-      cardCoverImg.tint = 0xFFFFFF;
+      cardCoverImg.tint = 0xffffff;
     });
 
     const cardBg: Sprite = new Sprite(Texture.WHITE);
@@ -53,7 +53,7 @@ export class Card extends Container {
     cardBg.height = 150;
     cardBg.tint = 0x3914af;
 
-    let sprite: Sprite = Sprite.from(`${img}.png`);
+    let sprite: Sprite = Sprite.from(loader.resources[`${img}`].texture);
     sprite.anchor.set(0.5);
     sprite.x = this.width / 2;
     sprite.y = -30;
@@ -88,9 +88,17 @@ export class Card extends Container {
     cardСover.tint = 0x9f3ed5;
     cardСover.visible = this.isHide;
 
-    this.setIsHide = (isHide:boolean):void => {
+    this.setIsHide = (isHide: boolean): void => {
       cardСover.visible = isHide;
       this.isHide = isHide;
+    };
+
+    this.setIsInteractive = (isInteractive: boolean) => {
+      this.interactive = isInteractive;
+    };
+
+    this.setIsWin = ():void => {
+      this.isWin = true;
     }
 
     let cardMask = new Graphics();
@@ -105,20 +113,27 @@ export class Card extends Container {
     cardCoverImg.y = this.height / 2;
     cardCoverImg.scale.set(0.05, 0.05);
     cardСover.addChild(cardCoverImg);
-    
+
     this.mask = cardMask;
 
-    this.addChild(cardMask, cardBg,  sprite, cardName, CardDescription, cardСover);
-  }  
-
-  public getIsHide = ():boolean => {
-    return this.isHide;
+    this.addChild(
+      cardMask,
+      cardBg,
+      sprite,
+      cardName,
+      CardDescription,
+      cardСover
+    );
   }
 
-  public static addCards(cards: ICard[]): Card[] {
+  public getIsHide = (): boolean => {
+    return this.isHide;
+  };
+
+  public static addCards(cards: ICard[], loader: Loader): Card[] {
     let x: number = 367; // x position including padding
     let y: number = 167; // y position including padding
-    let cardsRes:Card[] = []; 
+    let cardsRes: Card[] = [];
 
     cards.sort(() => Math.random() - 0.5); //shuffle cards
 
@@ -136,7 +151,8 @@ export class Card extends Container {
         cards[i].name,
         cards[i].id,
         cards[i].img,
-        cards[i].description
+        cards[i].description,
+        loader,
       );
       cardsRes[i] = card;
     }

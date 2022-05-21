@@ -21,38 +21,4 @@ export class GameBoard extends Container {
 
     this.addChild(cardBg);
   }
-
-  // public addCards(cards: ICard[]): void {
-  //   let x: number = -167; // x position including padding
-  //   let y: number = -167; // y position including padding
-
-  //   cards.sort(() => Math.random() - 0.5); //shuffle cards
-
-  //   for (let i = 0; i < cards.length; i++) {
-  //     if (i !== 0) {
-  //       x += 160;
-  //     }
-  //     if (x > 335) {
-  //       x = -167;
-  //       y += 160;
-  //     }
-  //     const card: Card = new Card(
-  //       x,
-  //       y,
-  //       cards[i].name,
-  //       cards[i].id,
-  //       cards[i].img,
-  //       cards[i].description
-  //     );
-  //     this.cards[i] = card;
-  //     this.addChild(card);
-  //   }
-  // }
-
-  // public hideCards = (): void => {
-  //   console.log(this.getChildAt(1));
-  //   this.children.map((card) => {
-  //     console.log();
-  //   });
-  // };
 }
