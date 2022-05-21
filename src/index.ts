@@ -122,11 +122,8 @@ window.onload = () => {
           }, 600);
         }
         if (winCardsCounter === cards.length) {
-          // app.ticker.stop();
           isGameBegin = false;
-          // setTimeout(() => {
-            initGame();
-          // }, 5000);
+          initGame();
         }
       });
     }
