@@ -1,0 +1,20 @@
+{"frames": {
+
+"#1 - Transparent Icons.png":
+{
+	"frame": {"x":1,"y":1,"w":510,"h":701},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":510,"h":701},
+	"sourceSize": {"w":512,"h":867}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "pixi.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":703},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1e8f25364dbd34df1be9a600ae24cbc8:b95fe490e10af75f349471f82545ea54:7cb72418430a29c0cfc86e097f7c7202$"
+}
+}
