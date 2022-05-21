@@ -10,6 +10,7 @@ const app = new Application({
   backgroundColor: 0x6495ed,
   width: innerWidth,
   height: innerHeight,
+  antialias:true,
 });
 
 const gameBoard: GameBoard =  new  GameBoard(app.screen.width / 2, app.screen.height / 2, 700);

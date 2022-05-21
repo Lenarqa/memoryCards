@@ -24,9 +24,10 @@ export class GameBoard extends Container {
   }
 
   addCards(cards: ICard[]) {
-    let x: number = -167; // -285
-    let y: number = -167; // -285
-    cards.sort(() => Math.random() - 0.5);
+    let x: number = -167; // x position including padding
+    let y: number = -167; // y position including padding
+    
+    cards.sort(() => Math.random() - 0.5); //shuffle cards
 
     for (let i = 0; i < cards.length; i++) {
         if (i !== 0) {
