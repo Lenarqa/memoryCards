@@ -1,16 +1,14 @@
-import { appConfig } from './config/index';
+import { appConfig } from "./config/index";
 import { Card } from "./card/index";
-import { Application, Loader, Text} from "pixi.js";
+import { Application, Loader, Text, Ticker } from "pixi.js";
 import { GameBoard } from "./gameBoard";
 import { cardInfo } from "./config";
 import { Game } from "./game";
 
 window.onload = () => {
   const app = new Application(appConfig);
-
   let cards: Card[] = [];
   const loader = new Loader();
-
   const game = new Game();
 
   const gameBoard: GameBoard = new GameBoard(
@@ -20,7 +18,7 @@ window.onload = () => {
   );
 
   // loading
-  const loadingText:Text = new Text("", {
+  const loadingText: Text = new Text("", {
     fontSize: 60,
     align: "center",
     fill: "#000",
@@ -41,38 +39,37 @@ window.onload = () => {
     .add("8", "8.png")
     .add("cardCover", "cardCover.png");
 
-
   loader.onProgress.add(() => {
     loadingText.text = "Loading " + loader.progress.toFixed(2) + "%";
   });
 
-  loader.onComplete.add(()=>{
+  loader.onComplete.add(() => {
     cards = Card.createCards(cardInfo, loader);
-    game.initGame(cards, app, gameBoard)
+    game.initGame(cards, app, gameBoard);
   });
 
   loader.load();
   // end loading
-
+  
   app.ticker.add((delta) => {
     if (game.getIsGameBegin()) {
       cards.map((card) => {
         if (
-          !card.isHide &&
+          !card.getIsHide() &&
           !game.getPlayingCards().includes(card) &&
-          !card.isWin &&
+          !card.getIsWin() &&
           card.interactive
         ) {
           game.pushPlaingCards(card);
         }
         if (
           game.getPlayingCards().length === 2 &&
-          game.getPlayingCards()[0].id === game.getPlayingCards()[1].id
+          game.getPlayingCards()[0].getCardId() === game.getPlayingCards()[1].getCardId()
         ) {
           cards.map((card) => {
             if (
-              card.id === game.getPlayingCards()[0].id ||
-              card.id === game.getPlayingCards()[1].id
+              card.getCardId() === game.getPlayingCards()[0].getCardId() ||
+              card.getCardId() === game.getPlayingCards()[1].getCardId()
             ) {
               card.setIsWin();
               card.setIsInteractive(false);
@@ -83,7 +80,7 @@ window.onload = () => {
         }
         if (
           game.getPlayingCards().length === 2 &&
-          game.getPlayingCards()[0].id !== game.getPlayingCards()[1].id
+          game.getPlayingCards()[0].getCardId() !== game.getPlayingCards()[1].getCardId()
         ) {
           app.ticker.stop();
           game.setInteractiveOfHiddenCards(cards, true);
@@ -94,7 +91,7 @@ window.onload = () => {
         }
         if (game.getWinCounter() === cards.length && app.ticker.started) {
           app.ticker.stop();
-          setTimeout(()=>{
+          setTimeout(() => {
             game.setIsGameBegin(false);
             cards = Card.createCards(cardInfo, loader);
             game.initGame(cards, app, gameBoard);

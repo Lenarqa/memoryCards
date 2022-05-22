@@ -2,12 +2,12 @@ import { ICard, cardConfig} from "./../config/index";
 import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
-  id: number;
-  isHide: boolean;
-  isWin: boolean;
-  setIsHide: (isHide: boolean) => void;
-  setIsInteractive: (isInteractive: boolean) => void;
-  setIsWin: () => void;
+  private id: number;
+  private isHide: boolean;
+  private isWin: boolean;
+  public setIsHide: (isHide: boolean) => void;
+  public setIsInteractive: (isInteractive: boolean) => void;
+  public setIsWin: () => void;
 
   constructor(
     x: number,
@@ -160,5 +160,17 @@ export class Card extends Container {
       cardsRes[i] = card;
     }
     return cardsRes;
+  }
+
+  public getCardId = ():number => {
+    return this.id;
+  }
+
+  public getIsHide = ():boolean => {
+    return this.isHide;
+  }
+
+  public getIsWin = ():boolean => {
+    return this.isWin;
   }
 }

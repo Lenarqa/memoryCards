@@ -13,7 +13,7 @@ export class Game {
     this.plaingCards = [];
   }
 
-  public initGame = (cards:Card[], app:Application, gameBoard:GameBoard) => {
+  public initGame = (cards:Card[], app:Application,  gameBoard:GameBoard) => {
     this.setWinCounter(0);
     this.setPlayingCards([]);
     this.setIsGameBegin(true);
@@ -22,7 +22,6 @@ export class Game {
     this.clearAppStage(app);
     gameBoard.addChild(...cards);
     app.stage.addChild(gameBoard);
-    
     this.beginGame(cards);
   };
 
@@ -46,7 +45,7 @@ export class Game {
   public hideCards = (cards: Card[], isHide: boolean): void => {
     //change to private later
     cards.map((card) => {
-      if (!card.isWin) {
+      if (!card.getIsWin()) {
         card.setIsHide(isHide);
       }
     });
@@ -55,7 +54,7 @@ export class Game {
 
   public setInteractiveOfHiddenCards = (cards:Card[], isInteractive: boolean): void => {
     cards.map((card) => {
-      if (card.isHide && !card.isWin) {
+      if (card.getIsHide() && !card.getIsWin()) {
         card.setIsInteractive(isInteractive);
       }
     });
@@ -67,7 +66,7 @@ export class Game {
     setTimeout(() => {
       this.hideCards(cards, true);
       app.ticker.start();
-    }, 600);
+    }, 100);
   };
 
   //getters setters
