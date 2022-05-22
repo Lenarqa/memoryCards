@@ -33,8 +33,12 @@ export class Card extends Container {
     this.isWin = false;
 
     this.on("pointerdown", () => {
-      cardСover.visible = !cardСover.visible;
-      this.isHide = cardСover.visible;
+      if(!this.isHide) {
+        return;
+      }else {
+        cardСover.visible = !cardСover.visible;
+        this.isHide = cardСover.visible;
+      }
     });
 
     this.on("pointerover", () => {
