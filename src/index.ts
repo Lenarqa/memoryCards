@@ -19,6 +19,7 @@ window.onload = () => {
     700
   );
 
+  // loading
   const loadingText:Text = new Text("", {
     fontSize: 60,
     align: "center",
@@ -38,10 +39,6 @@ window.onload = () => {
     .add("6", "6.png")
     .add("7", "7.png")
     .add("8", "8.png")
-    .add("delete2", "8.png")
-    .add("delete4", "8.png")
-    .add("delete5", "8.png")
-    .add("delete16", "8.png")
     .add("cardCover", "cardCover.png");
 
 
@@ -55,6 +52,7 @@ window.onload = () => {
   });
 
   loader.load();
+  // end loading
 
   app.ticker.add((delta) => {
     if (game.getIsGameBegin()) {
@@ -95,9 +93,12 @@ window.onload = () => {
           }, 600);
         }
         if (game.getWinCounter() === cards.length) {
-          game.setIsGameBegin(false);
-          cards = Card.createCards(cardInfo, loader);
-          game.initGame(cards, app, gameBoard);
+          app.ticker.stop();
+          setTimeout(()=>{
+            game.setIsGameBegin(false);
+            cards = Card.createCards(cardInfo, loader);
+            game.initGame(cards, app, gameBoard);
+          }, 5000);
         }
       });
     }
