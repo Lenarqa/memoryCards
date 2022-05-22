@@ -1,3 +1,22 @@
+export const appConfig = {
+  view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
+  resolution: window.devicePixelRatio || 1,
+  autoDensity: true,
+  backgroundColor: 0x6495ed,
+  width: innerWidth,
+  height: innerHeight,
+  antialias: true,
+}
+
+export const cardConfig = {
+  size: 150,
+  colors: {
+    cardBgTint: 0x3914af,
+    cardName: "#FFE773",
+    cardDescription: "#FFDE40",
+  }
+}
+
 export interface ICard {
   name: string;
   description: string;

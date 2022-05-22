@@ -1,57 +1,51 @@
-import { GameBoard } from "./../gameBoard/index";
+import { GameBoard } from './../gameBoard/index';
 import { Application } from "pixi.js";
 import { Card } from "../card";
 
 export class Game {
-  isGameBegin: boolean;
-  cards: Card[] = [];
-  winCardsCounter: number;
-  plaingCards: Card[];
-  app: Application;
+  private isGameBegin: boolean;
+  private winCardsCounter: number;
+  private plaingCards: Card[];
 
-  constructor(cards: Card[], app: Application) {
-    this.cards = cards;
-    this.app = app;
+  constructor() {
     this.isGameBegin = false;
     this.winCardsCounter = 0;
     this.plaingCards = [];
   }
 
-  public initGame = (gameBoard: GameBoard) => {
-    this.winCardsCounter = 0;
-    this.plaingCards = [];
-    this.isGameBegin = true;
-    this.app.ticker.start();
+  public initGame = (cards:Card[], app:Application, gameBoard:GameBoard) => {
+    this.setWinCounter(0);
+    this.setPlayingCards([]);
+    this.setIsGameBegin(true);
+    app.ticker.start();
 
-    this.clearAppStage();
-
-    gameBoard.addChild(...this.cards);
-
-    this.app.stage.addChild(gameBoard);
-
-    this.beginGame();
+    this.clearAppStage(app);
+    gameBoard.addChild(...cards);
+    app.stage.addChild(gameBoard);
+    
+    this.beginGame(cards);
   };
 
-  public beginGame = (): void => {
+  public beginGame = (cards:Card[]): void => {
     setTimeout(() => {
-      this.cards.map((card) => {
+      cards.map((card) => {
         card.setIsHide(true);
         card.setIsInteractive(true);
       });
     }, 5000); //5000
   };
 
-  private clearAppStage = (): void => {
-    if (this.app.stage.children.length > 0) {
-      for (var i = this.app.stage.children.length - 1; i >= 0; i--) {
-        this.app.stage.removeChild(this.app.stage.children[i]);
+  private clearAppStage = (app: Application): void => {
+    if (app.stage.children.length > 0) {
+      for (var i = app.stage.children.length - 1; i >= 0; i--) {
+        app.stage.removeChild(app.stage.children[i]);
       }
     }
   };
 
-  public hideCards = (isHide: boolean): void => {
+  public hideCards = (cards: Card[], isHide: boolean): void => {
     //change to private later
-    this.cards.map((card) => {
+    cards.map((card) => {
       if (!card.isWin) {
         card.setIsHide(isHide);
       }
@@ -59,20 +53,20 @@ export class Game {
     this.plaingCards = [];
   };
 
-  public setInteractiveOfHiddenCards = (isInteractive: boolean): void => {
-    this.cards.map((card) => {
+  public setInteractiveOfHiddenCards = (cards:Card[], isInteractive: boolean): void => {
+    cards.map((card) => {
       if (card.isHide && !card.isWin) {
         card.setIsInteractive(isInteractive);
       }
     });
   };
 
-  public hideErrorCards = (): void => {
-    this.app.ticker.stop();
-    this.setInteractiveOfHiddenCards(true);
+  public hideErrorCards = (cards:Card[], app: Application): void => {
+    app.ticker.stop();
+    this.setInteractiveOfHiddenCards(cards, true);
     setTimeout(() => {
-      this.hideCards(true);
-      this.app.ticker.start();
+      this.hideCards(cards, true);
+      app.ticker.start();
     }, 600);
   };
 
@@ -85,13 +79,13 @@ export class Game {
     this.isGameBegin = isBegin;
   };
 
-  public getCards = (): Card[] => {
-    return this.cards;
-  };
+//   public getCards = (): Card[] => {
+//     return this.cards;
+//   };
 
-  public setCards = (cards: Card[]): void => {
-    this.cards = cards;
-  };
+//   public setCards = (cards: Card[]): void => {
+//     this.cards = cards;
+//   };
 
   public getPlayingCards = (): Card[] => {
     return this.plaingCards;
@@ -117,7 +111,7 @@ export class Game {
     this.winCardsCounter++;
   };
 
-  public getApp = ():Application => {
-      return this.app;
-  }
+//   public getApp = ():Application => {
+//       return this.app;
+//   }
 }

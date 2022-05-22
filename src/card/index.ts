@@ -1,4 +1,4 @@
-import { ICard } from "./../config/index";
+import { ICard, cardConfig} from "./../config/index";
 import { Container, Texture, Text, Sprite, Loader, Graphics } from "pixi.js";
 
 export class Card extends Container {
@@ -21,8 +21,8 @@ export class Card extends Container {
     super();
     this.x = x;
     this.y = y;
-    this.width = 150;
-    this.height = 150;
+    this.width = cardConfig.size;
+    this.height = cardConfig.size;
     this.interactive = false;
     this.buttonMode = true;
     this.id = id;
@@ -49,9 +49,9 @@ export class Card extends Container {
 
     const cardBg: Sprite = new Sprite(Texture.WHITE);
     cardBg.anchor.set(0.5);
-    cardBg.width = 150;
-    cardBg.height = 150;
-    cardBg.tint = 0x3914af;
+    cardBg.width = cardConfig.size;
+    cardBg.height = cardConfig.size;
+    cardBg.tint = cardConfig.colors.cardBgTint;
 
     let sprite: Sprite = Sprite.from(loader.resources[`${img}`].texture);
     sprite.anchor.set(0.5);
@@ -63,7 +63,7 @@ export class Card extends Container {
       fontSize: 20,
       wordWrap: true,
       align: "center",
-      fill: "#FFE773",
+      fill: cardConfig.colors.cardName,
     });
 
     cardName.anchor.set(0.5);
@@ -74,7 +74,7 @@ export class Card extends Container {
       fontSize: 20,
       wordWrap: true,
       align: "center",
-      fill: "#FFDE40",
+      fill: cardConfig.colors.cardDescription,
     });
 
     CardDescription.anchor.set(0.5);
