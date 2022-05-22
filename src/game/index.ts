@@ -79,14 +79,6 @@ export class Game {
     this.isGameBegin = isBegin;
   };
 
-//   public getCards = (): Card[] => {
-//     return this.cards;
-//   };
-
-//   public setCards = (cards: Card[]): void => {
-//     this.cards = cards;
-//   };
-
   public getPlayingCards = (): Card[] => {
     return this.plaingCards;
   };
@@ -110,8 +102,4 @@ export class Game {
   public increaseWinCounter = (): void => {
     this.winCardsCounter++;
   };
-
-//   public getApp = ():Application => {
-//       return this.app;
-//   }
 }

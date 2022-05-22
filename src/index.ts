@@ -1,6 +1,6 @@
 import { appConfig } from './config/index';
 import { Card } from "./card/index";
-import { Application, Loader} from "pixi.js";
+import { Application, Loader, Text} from "pixi.js";
 import { GameBoard } from "./gameBoard";
 import { cardInfo } from "./config";
 import { Game } from "./game";
@@ -19,6 +19,16 @@ window.onload = () => {
     700
   );
 
+  const loadingText:Text = new Text("", {
+    fontSize: 60,
+    align: "center",
+    fill: "#000",
+  });
+  loadingText.anchor.set(0.5);
+  loadingText.position.x = app.screen.width / 2;
+  loadingText.position.y = app.screen.height / 2;
+  app.stage.addChild(loadingText);
+
   loader
     .add("1", "1.png")
     .add("2", "2.png")
@@ -28,10 +38,15 @@ window.onload = () => {
     .add("6", "6.png")
     .add("7", "7.png")
     .add("8", "8.png")
+    .add("delete2", "8.png")
+    .add("delete4", "8.png")
+    .add("delete5", "8.png")
+    .add("delete16", "8.png")
     .add("cardCover", "cardCover.png");
 
-  loader.onProgress.add((e) => {
-    console.log(e.progress);
+
+  loader.onProgress.add(() => {
+    loadingText.text = "Loading " + loader.progress.toFixed(2) + "%";
   });
 
   loader.onComplete.add(()=>{
