@@ -99,6 +99,7 @@ export class Card extends Container {
 
     this.setIsWin = ():void => {
       this.isWin = true;
+      cardBg.tint = 0x3914af;
     }
 
     let cardMask = new Graphics();
@@ -126,25 +127,23 @@ export class Card extends Container {
     );
   }
 
-  public getIsHide = (): boolean => {
-    return this.isHide;
-  };
-
-  public static addCards(cards: ICard[], loader: Loader): Card[] {
-    let x: number = 367; // x position including padding
-    let y: number = 167; // y position including padding
+  public static createCards(cards: ICard[], loader: Loader): Card[] {
+    let x: number = -167; // x position including padding 
+    let y: number = -167; // y position including padding
     let cardsRes: Card[] = [];
 
     cards.sort(() => Math.random() - 0.5); //shuffle cards
 
     for (let i = 0; i < cards.length; i++) {
       if (i !== 0) {
-        x += 160;
+        x += 160; 
       }
-      if (x > 935) {
-        x = 367;
-        y += 160;
+
+      if (x > 335) {
+        x = -167; 
+        y += 160; 
       }
+
       const card: Card = new Card(
         x,
         y,

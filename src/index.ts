@@ -57,13 +57,18 @@ window.onload = () => {
         app.stage.removeChild(app.stage.children[i]);
       }
     }
+    
     const gameBoard: GameBoard = new GameBoard(
       app.screen.width / 2,
       app.screen.height / 2,
       700
     );
-    cards = Card.addCards(cardInfo, loader);
-    app.stage.addChild(gameBoard, ...cards);
+
+    cards = Card.createCards(cardInfo, loader);
+    gameBoard.addChild(...cards);
+
+    app.stage.addChild(gameBoard);
+
     beginGame();
   };
 
