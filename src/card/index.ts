@@ -112,7 +112,7 @@ export class Card extends Container {
     cardMask.drawCircle(this.width / 2, this.height / 2, 65); //7.1
     cardMask.endFill();
 
-    const cardCoverImg = Sprite.from("cardCover.png");
+    const cardCoverImg = Sprite.from(loader.resources[`cardCover`].texture);
     cardCoverImg.anchor.set(0.5);
     cardCoverImg.x = this.width / 2;
     cardCoverImg.y = this.height / 2;

@@ -27,7 +27,8 @@ window.onload = () => {
     .add("5", "5.png")
     .add("6", "6.png")
     .add("7", "7.png")
-    .add("8", "8.png");
+    .add("8", "8.png")
+    .add("cardCover", "cardCover.png");
 
   loader.onProgress.add((e) => {
     console.log(e.progress);
