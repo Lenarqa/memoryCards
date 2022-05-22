@@ -92,7 +92,7 @@ window.onload = () => {
             app.ticker.start();
           }, 600);
         }
-        if (game.getWinCounter() === cards.length) {
+        if (game.getWinCounter() === cards.length && app.ticker.started) {
           app.ticker.stop();
           setTimeout(()=>{
             game.setIsGameBegin(false);
